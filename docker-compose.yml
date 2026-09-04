@@ -1,0 +1,85 @@
+version: '3.8'
+
+networks:
+  ctin_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+
+services:
+  postgres_db:
+    image: postgres:15-alpine
+    container_name: ctin_postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-ctin_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/migrations/seed.sql:/docker-entrypoint-initdb.d/seed.sql
+    networks:
+      - ctin_network
+
+  startups_service:
+    build:
+      context: ./services/startups
+    container_name: ctin_startups_service
+    restart: always
+    environment:
+      PORT: 3001
+      DB_HOST: postgres_db
+      DB_USER: ${POSTGRES_USER:-postgres}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      DB_NAME: ${POSTGRES_DB:-ctin_db}
+      DB_PORT: 5432
+    depends_on:
+      - postgres_db
+    networks:
+      - ctin_network
+
+  technologies_service:
+    build:
+      context: ./services/technologies
+    container_name: ctin_technologies_service
+    restart: always
+    environment:
+      PORT: 3002
+      DB_HOST: postgres_db
+      DB_USER: ${POSTGRES_USER:-postgres}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      DB_NAME: ${POSTGRES_DB:-ctin_db}
+      DB_PORT: 5432
+    depends_on:
+      - postgres_db
+    networks:
+      - ctin_network
+
+  gateway:
+    build:
+      context: ./gateway
+    container_name: ctin_gateway
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - startups_service
+      - technologies_service
+    networks:
+      - ctin_network
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: ctin_frontend
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - gateway
+    networks:
+      - ctin_network
+      

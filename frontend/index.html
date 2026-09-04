@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>RETO 1 - CTIN</title>
+</head>
+<body>
+    <h1>Microservicios RETO 1 - CTIN</h1>
+    <h2>Startups</h2>
+    <pre id="startups">Cargando...</pre>
+    <h2>Tecnologias</h2>
+    <pre id="technologies">Cargando...</pre>
+
+    <script>
+        fetch("http://localhost:8080/api/startups")
+            .then(res => res.json())
+            .then(data => document.getElementById("startups").textContent = JSON.stringify(data, null, 2))
+            .catch(err => document.getElementById("startups").textContent = "Error al cargar");
+
+        fetch("http://localhost:8080/api/technologies")
+            .then(res => res.json())
+            .then(data => document.getElementById("technologies").textContent = JSON.stringify(data, null, 2))
+            .catch(err => document.getElementById("technologies").textContent = "Error al cargar");
+    </script>
+</body>
+</html>
