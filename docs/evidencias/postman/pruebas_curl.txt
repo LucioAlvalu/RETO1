@@ -1,0 +1,19 @@
+# Pruebas Manuales de Microservicios ---- RETO 1 CTIN----
+# Endpoints probados a través del API Gateway (Puerto 8080)
+
+# 1. Health check de Startups
+curl -X GET http://localhost:8080/v1/api/startups/health
+
+# 2. Leer todas las Startups (GET)
+curl -X GET http://localhost:8080/v1/api/startups/read
+
+# 3. Crear una Startup (POST)
+curl -X POST http://localhost:8080/v1/api/startups/create \
+  -H "Content-Type: application/json" \
+  -d '{"name":"OpenAI Ventures","founded_at":"2018-03-20","location":"Ciudad de México","category":"AI","funding_amount":2500000}'
+
+# 4. Health check de Technologies
+curl -X GET http://localhost:8080/v1/api/technologies/health
+
+# 5. Leer todas las Tecnologías (GET)
+curl -X GET http://localhost:8080/v1/api/technologies/read

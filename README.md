@@ -96,3 +96,77 @@ Las variables se definen globalmente mediante un archivo `.env` en la raíz:
    ```bash
    git clone [https://github.com/LucioAlvalu/RETO1.git](https://github.com/LucioAlvalu/RETO1.git)
    cd RETO1
+
+URLs y puertos
+Frontend App: http://localhost:3000
+
+API Gateway Base: http://localhost:8080/v1/api
+
+Health Check Startups: http://localhost:8080/v1/api/startups/health
+
+Health Check Technologies: http://localhost:8080/v1/api/technologies/health
+
+Base de datos PostgreSQL: localhost:5432
+
+Rutas de API
+Domain: Startups
+POST /v1/api/startups/create
+
+GET /v1/api/startups/read
+
+GET /v1/api/startups/read/:id
+
+PUT /v1/api/startups/update/:id
+
+DELETE /v1/api/startups/delete/:id
+
+Domain: Technologies
+POST /v1/api/technologies/create
+
+GET /v1/api/technologies/read
+
+GET /v1/api/technologies/read/:id
+
+PUT /v1/api/technologies/update/:id
+
+DELETE /v1/api/technologies/delete/:id
+
+Flujo del front-end
+El usuario accede a http://localhost:3000.
+
+La interfaz consume de forma asíncrona los endpoints del Gateway en http://localhost:8080/v1/api.
+
+Se renderizan los listados y formularios interactivos de Startups y Tecnologías.
+
+Instrucciones de despliegue
+Ejecutable por completo mediante docker compose up -d --build.
+
+Pruebas manuales
+Colección de comandos y peticiones disponibles en /docs/evidencias/postman/pruebas_curl.txt.
+
+Evidencias
+Capturas de pantalla y evidencias guardadas en /docs/evidencias/capturas/.
+
+Limitaciones conocidas
+Base de datos relacional compartida en lugar de bases de datos independientes por microservicio.
+
+Siguientes pasos
+Implementar autenticación JWT y paginación en consultas.
+
+Información del repositorio Git
+URL: https://github.com/LucioAlvalu/RETO1.git
+
+Rama principal: main
+
+Rúbrica de evaluación
+Funcionamiento (CRUDs) — 30%
+
+Código y orden — 25%
+
+Contenedores y despliegue — 20%
+
+Documentación y reproducibilidad — 15%
+
+Pruebas manuales claras — 10%
+
+Plus — +10%
