@@ -35,7 +35,7 @@ v
 - **Orquestación:** Docker y Docker Compose (Garantiza reproducibilidad del entorno sin importar el sistema operativo anfitrión).
 
 ## Estructura del proyecto
-
+```text
 reto1/
 ├── gateway/
 │   ├── nginx.conf
